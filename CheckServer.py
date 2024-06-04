@@ -80,13 +80,13 @@ if __name__ == "__main__":
             servers = pickle.load(open("servers.pickle", "rb"))
         except:
             servers = [
-                Server("185.197.194.80", 80, "ping", "high"),
+
                 Server("yahoo.com", 80, "plain", "high")
             ]
 
         for server in servers:
             server.check_connection()
-            print(len(server.history))
+            # print(len(server.history))
             print(server.history[-1])
 
         pickle.dump(servers, open("servers.pickle", "wb"))
