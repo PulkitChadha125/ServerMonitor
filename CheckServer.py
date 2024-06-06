@@ -7,12 +7,12 @@ import platform
 from gmail import email_alert
 
 class Server():
-    def __init__(self, name, port, connection, priority):
+    def __init__(self, name, port, connection, priority,email):
         self.name = name
         self.port = port
         self.connection = connection.lower()
         self.priority = priority.lower()
-
+        self.email=email
         self.history = []
         self.alert = False
 
@@ -24,17 +24,17 @@ class Server():
         try:
             if self.connection == "plain":
                 socket.create_connection((self.name, self.port), timeout=10)
-                msg = f"{self.name} is up. On port {self.port} with {self.connection}"
+                msg = f"{self.name} is up. On port {self.port} with {self.connection} {self.email}"
                 success = True
                 self.alert = False
             elif self.connection == "ssl":
                 ssl.wrap_socket(socket.create_connection((self.name, self.port), timeout=10))
-                msg = f"{self.name} is up. On port {self.port} with {self.connection}"
+                msg = f"{self.name} is up. On port {self.port} with {self.connection} {self.email}"
                 success = True
                 self.alert = False
             else:
                 if self.ping():
-                    msg = f"{self.name} is up. On port {self.port} with {self.connection}"
+                    msg = f"{self.name} is up. On port {self.port} with {self.connection} {self.email}"
                     success = True
                     self.alert = False
         except socket.timeout:
@@ -51,7 +51,7 @@ class Server():
             # Uncomment this once you have setup gmail alerts!
             # Check out video if you need help!
             # https://youtu.be/B1IsCbXp0uE
-            # email_alert(self.name,f"{msg}\n{now}","jake@claritycoders.com")
+            email_alert("VPS Alert",f"You vps : {self.name} is down @  time: {now}",self.email)
 
         self.create_history(msg,success,now)
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         except:
             servers = [
 
-                Server("yahoo.com", 80, "plain", "high")
+                Server("yahoo.com", 80, "plain", "high","abc@gmail.com")
             ]
 
         for server in servers:
