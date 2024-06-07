@@ -5,6 +5,10 @@ import pickle
 import subprocess
 import platform
 from gmail import email_alert
+def write_to_order_logs(message):
+    with open('EmailLogs.txt', 'a') as file:  # Open the file in append mode
+        file.write(message + '\n')
+
 
 class Server():
     def __init__(self, name, port, connection, priority,email):
@@ -51,7 +55,14 @@ class Server():
             # Uncomment this once you have setup gmail alerts!
             # Check out video if you need help!
             # https://youtu.be/B1IsCbXp0uE
-            email_alert("VPS Alert",f"You vps : {self.name} is down @  time: {now}",self.email)
+
+            email_alert("VPS Alert",f"You'r vps : {self.name} is down @  time: {now} please check ",self.email)
+            email_alert("VPS Alert", f"Client vps : {self.name} is down @  time: {now}", "prajwal.naganur@botmudra.com")
+            email_alert("VPS Alert", f"Client vps : {self.name} is down @  time: {now}", "suresh.patil@botmudra.com")
+            email_alert("VPS Alert", f"Client vps : {self.name} is down @  time: {now}", "Botmudra@gmail.com")
+            EmailLogs=f"{now} Email sent to {self.email}"
+            print(EmailLogs)
+            write_to_order_logs(EmailLogs)
 
         self.create_history(msg,success,now)
 
