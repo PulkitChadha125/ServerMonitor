@@ -1,5 +1,6 @@
 import socket
 import ssl
+import time
 from datetime import datetime
 import pickle
 import subprocess
@@ -88,6 +89,7 @@ class Server():
 if __name__ == "__main__":
     while True:
         try:
+
             servers = pickle.load(open("servers.pickle", "rb"))
         except:
             servers = [
@@ -101,3 +103,4 @@ if __name__ == "__main__":
             print(server.history[-1])
 
         pickle.dump(servers, open("servers.pickle", "wb"))
+        time.sleep(60)
