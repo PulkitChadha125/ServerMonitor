@@ -28,12 +28,12 @@ class Server():
 
         try:
             if self.connection == "plain":
-                socket.create_connection((self.name, self.port), timeout=10)
+                socket.create_connection((self.name, self.port), timeout=20)
                 msg = f"{self.name} is up. On port {self.port} with {self.connection} {self.email}"
                 success = True
                 self.alert = False
             elif self.connection == "ssl":
-                ssl.wrap_socket(socket.create_connection((self.name, self.port), timeout=10))
+                ssl.wrap_socket(socket.create_connection((self.name, self.port), timeout=20))
                 msg = f"{self.name} is up. On port {self.port} with {self.connection} {self.email}"
                 success = True
                 self.alert = False
